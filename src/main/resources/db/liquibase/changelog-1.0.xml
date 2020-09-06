@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet  author="Magnus Jerre"  id="changelog-1.0">
+        <createTable tableName="COOK_BOOK_USER">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true" />
+            </column>
+            <column name="EXTERNAL_USER_PROVIDER_ID" type="VARCHAR">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+        <createTable  tableName="RECIPE">
+            <column name="id" type="INTEGER" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true" />
+            </column>
+            <column  name="NAME"  type="VARCHAR" />
+            <column name="OWNER_ID" type="INTEGER">
+                <constraints nullable="false" foreignKeyName="fk_recipe_user" references="COOK_BOOK_USER(ID)"/>
+            </column>
+            <column name="INTRO" type="VARCHAR"/>
+            <column name="BASE_UNIT" type="INT"/>
+            <column name="ACTIVE_TIME_MIN" type="INT"/>
+            <column name="ACTIVE_TIME_MAX" type="INT"/>
+            <column name="TOTAL_TIME_MIN" type="INT"/>
+            <column name="TOTAL_TIME_MAX" type="INT"/>
+        </createTable>
+        <createTable tableName="RECIPE_GROUP">
+            <column name="id" type="INTEGER" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true" />
+            </column>
+            <column name="RECIPE_ID" type="INTEGER" >
+                <constraints unique="false" nullable="false" foreignKeyName="fk_reipce_group_recipe" references="RECIPE(ID)" />
+            </column>
+            <column name="NAME" type="VARCHAR" />
+            <column name="SEQUENCE_NUMBER" type="TINYINT" />
+        </createTable>
+        <createTable tableName="INGREDIENT">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true" />
+            </column>
+            <column name="RECIPE_GROUP_ID" type="INTEGER">
+                <constraints nullable="false" foreignKeyName="fk_ingredient_recipe_group" references="RECIPE_GROUP(ID)" />
+            </column>
+            <column name="NAME" type="VARCHAR">
+                <constraints nullable="false" />
+            </column>
+            <column name="MEASURE_UNIT" type="VARCHAR" />
+            <column name="MEASUREMENT" type="FLOAT" />
+        </createTable>
+        <createTable tableName="RECIPE_GROUP_STEP" >
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true" />
+            </column>
+            <column name="SEQUENCE_NUMBER" type="TINYINT" />
+            <column name="DESCRIPTION" type="VARCHAR" />
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

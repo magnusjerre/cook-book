@@ -15,6 +15,7 @@
 	<description>Webapp som gjør det mulig å lage oppskrifter</description>
 
 	<properties>
+		<auth0-spring-security.version>1.4.0</auth0-spring-security.version>
 		<java.version>11</java.version>
 		<kotlin.version>1.3.72</kotlin.version>
 		<frontend-src-dir>${project.basedir}/src/main/frontend</frontend-src-dir>
@@ -34,8 +35,9 @@
 			<artifactId>postgresql</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
+			<groupId>com.auth0</groupId>
+			<artifactId>auth0-spring-security-api</artifactId>
+			<version>${auth0-spring-security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

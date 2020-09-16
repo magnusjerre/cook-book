@@ -1,17 +1,10 @@
 package com.baje.cookbook.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import javax.persistence.Entity
-import javax.persistence.FetchType
-import javax.persistence.ForeignKey
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
-data class Recipe (
+data class Recipe(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Long?,
@@ -25,5 +18,7 @@ data class Recipe (
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(foreignKey = ForeignKey(name = "owner_id"), name = "owner_id")
         @JsonIgnore
-        var owner: CookBookUser
+        var owner: CookBookUser,
+        @OneToMany(mappedBy = "recipe", cascade = [CascadeType.ALL], orphanRemoval = true)
+        var sections: List<Section>
 )

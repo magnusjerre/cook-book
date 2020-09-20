@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CookBookUserRepository : JpaRepository<CookBookUser, Long> {
+    fun findByExternalUserProviderId(externalUserProviderId: String): CookBookUser?
 }

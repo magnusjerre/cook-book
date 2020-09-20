@@ -3,6 +3,7 @@ package com.baje.cookbook.models
 import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
+@Entity
 data class SectionStep(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

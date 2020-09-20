@@ -31,6 +31,10 @@ docker inspect cook-book-db
       }
   ]
 ```
+pgAdmin kan kjøres opp slik og er da aksesserbar på `localhost:80`:
+```shell script
+docker run -e PGADMIN_DEFAULT_EMAIL=email@domain.com -e PGADMIN_DEFAULT_PASSWORD=password --name pgadmin -p 80:80 --net cook-book-network -d dpage/pgadmin4
+```
 
 # Oppdatering / endring av databasen
 Om man har laget nye changelog-filer så må man også lage et nytt image av databasen. For å få generert nødvendig SQL for databasens oppbygging må man i rotmappen kjøre et maven script mot en helt tom database.

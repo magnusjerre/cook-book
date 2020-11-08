@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Cook book db",
+      "Group": "Servers",
+      "Port": 5432,
+      "Username": "postgres",
+      "Host": "cook-book_database_1",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+version: '3'
+services:
+  database:
+    build: ./
+    environment:
+      - POSTGRES_PASSWORD=password
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=password
+      - PGADMIN_DEFAULT_EMAIL=postgres@cookbook.no
+    networks:
+      - backend
+    ports:
+      - 80:80
+    volumes:
+      - ./pgadmin-servers.json:/pgadmin4/servers.json
+networks:
+  backend:

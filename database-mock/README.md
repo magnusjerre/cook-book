@@ -1,3 +1,5 @@
+# Kjøre opp database
+Den enkleste måten å kjøre opp databasen på er å bruke `docker-compose up -d --build`, da kjøres både databasen og pgadmin opp.
 # Liquibase migreringsguide for docker image
 Vi kjører opp en lokal docker container for databasen vår. Imaget må først bygges før det kan kjøres opp. Man kan enten bruke ``start-database.bat`` for å bruke en prekonfiguret ``docker run``-kommando, eller så kan man starte opp selv slik som under.
 

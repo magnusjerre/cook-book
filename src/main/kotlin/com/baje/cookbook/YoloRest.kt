@@ -47,6 +47,15 @@ class YoloController {
     @GetMapping("user")
     fun user(): List<CookBookUser> = cookBookUserRepository.findAll()
 
+    @GetMapping("recipes")
+    fun getRecipes(jwt: AuthenticationJsonWebToken): List<Recipe> {
+        logger.info("Fetching user with external id ${jwt.principal}, for getRecipes")
+        val loggedInUser = cookBookUserRepository.findByExternalUserProviderId(jwt.principal.toString())?.copy(recipes = emptyList())
+                ?: throw UsernameNotFoundException(jwt.principal.toString())
+
+        return recipeRepository.findAllByOwnerId(loggedInUser.id!!)
+    }
+
     @PostMapping("recipe")
     fun createRecipe(jwt: AuthenticationJsonWebToken, @RequestBody recipe: RESTRecipe) {
         logger.info("Fetching user with external id ${jwt.principal}")

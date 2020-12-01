@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface RecipeRepository : JpaRepository<Recipe, Long> {
+    fun findAllByOwnerId(ownerId: Long): List<Recipe>
 }

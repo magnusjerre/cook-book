@@ -12,6 +12,7 @@ function App() {
   const [yolo, setYolo] = useState(null);
   const [yoloSecured, setYoloSecured] = useState(null);
   const [saveMapResult, setSaveMapResult] = useState(null);
+  const [recipes, setRecipes] = useState(null);
 
   const fetchYolo = () => {
     fetch("/yolo")
@@ -40,6 +41,29 @@ function App() {
       }
     })();
   }
+
+  const fetchRecipes = () => {
+    (async () => {
+      try {
+        console.log("getting access token silently");
+        const token = await getAccessTokenSilently({
+          audience: "https://baje-cook-book.herokuap.com",
+          scope: "read:yolosecret",
+        });
+        console.log("fetching recipes");
+        const response = await fetch("/recipes", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const text = await response.text();
+        setRecipes(text);
+        console.log("Recipes", text);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  };
 
   const saveMap = () => {
     (async () => {
@@ -84,6 +108,7 @@ function App() {
         <button onClick={fetchYoloSecured2}>Fetch yolo-secured</button>
         <p>{saveMapResult}</p>
         <button onClick={saveMap}>Save map to backend</button>
+        <button onClick={fetchRecipes}>Recipes</button>
         <h2>Wanna login?</h2>
         <LoginButton />
         <LogoutButton />

@@ -5,6 +5,7 @@ import LoginButton from './login-logout/LoginButton';
 import LogoutButton from './login-logout/LogoutButton';
 import Profile from './login-logout/Profile';
 import { useAuth0 } from '@auth0/auth0-react';
+import RecipeOverview from './recipe/RecipeOverview';
 
 function App() {
   const { getAccessTokenSilently } = useAuth0();
@@ -12,7 +13,7 @@ function App() {
   const [yolo, setYolo] = useState(null);
   const [yoloSecured, setYoloSecured] = useState(null);
   const [saveMapResult, setSaveMapResult] = useState(null);
-  const [recipes, setRecipes] = useState(null);
+  const [recipes, setRecipes] = useState([]);
 
   const fetchYolo = () => {
     fetch("/yolo")
@@ -56,9 +57,9 @@ function App() {
             Authorization: `Bearer ${token}`,
           },
         });
-        const text = await response.text();
-        setRecipes(text);
-        console.log("Recipes", text);
+        const recipes = await response.json();
+        setRecipes(recipes);
+        console.log("Recipes", recipes);
       } catch (e) {
         console.log(e);
       }
@@ -109,6 +110,12 @@ function App() {
         <p>{saveMapResult}</p>
         <button onClick={saveMap}>Save map to backend</button>
         <button onClick={fetchRecipes}>Recipes</button>
+        <h1>My Recipes</h1>
+        <ul>
+          {
+            recipes.map(recipe => <RecipeOverview recipe={recipe} />)
+          }
+        </ul>
         <h2>Wanna login?</h2>
         <LoginButton />
         <LogoutButton />
